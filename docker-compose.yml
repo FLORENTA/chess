@@ -14,6 +14,8 @@ services:
         environment:
             PMA_HOST: mysql
             PMA_PORT: 3306
+            PMA_USER: chess
+            PMA_PASSWORD: chess
 
     mysql:
         container_name: sf4_mysql
@@ -23,7 +25,10 @@ services:
             - 'db-data:/var/lib/mysql'
         restart: on-failure
         environment:
-            - .env
+            MYSQL_ROOT_PASSWORD: ROOT
+            MYSQL_DATABASE: chess
+            MYSQL_USER: chess
+            MYSQL_PASSWORD: chess
         ports:
             - 3306:3306
 
@@ -49,6 +54,7 @@ services:
         user: 1000:1000
         volumes:
             - '${PROJECT_ROOT}:/usr/src/app' # must be set
+            - ~/.composer/auth.json:/.composer/auth.json
         depends_on:
             - mysql
             - vue-cli
